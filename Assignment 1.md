@@ -9,3 +9,9 @@ Answer - When you type a URL into your browser and press Enter, a series of step
 * CSS and JavaScript Execution: The browser applies CSS styles and executes JavaScript to render the page.
 * Rendering: Finally, the browser renders the page on the screen, making it visible to the user.
 
+
+
+
+
+git config --global user.email "queenaman1223@gmail.com"
+git config --global user.name "Queenaman"
