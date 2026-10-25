@@ -1,0 +1,140 @@
+# Fix a supplied page where overflow is breaking the layout. 
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Fixing overflow that breaks a layout.">
+  <title>Fixing Overflow Problems</title>
+  <style>
+    /* ===== FIXES (see comments marked FIX) ===== */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    /* FIX 1: padding no longer widens boxes */
+    body {
+      font-family: system-ui, sans-serif;
+      margin: 0;
+      padding: 1rem;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* FIX 2: images never exceed container */
+    .wrapper {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    /* FIX 3: was width: 900px (broke phones) */
+    .column {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid #1d3557;
+      margin-bottom: 1rem;
+    }
+
+    /* was width:100% + padding, no border-box */
+    .long-text {
+      overflow-wrap: anywhere;
+    }
+
+    /* FIX 4: long URLs/words wrap */
+    .table-scroll {
+
+      overflow-x: auto;
+    }
+
+    /* FIX 5: wide table scrolls inside its own box */
+    .fixed-box {
+      height: 90px;
+      overflow-y: auto;
+      border: 1px solid #999;
+      padding: .5rem;
+    }
+
+    /* FIX 6: text no longer spills out of fixed height */
+    pre {
+      overflow-x: auto;
+      background: #f4f4f4;
+      padding: .75rem;
+    }
+
+    /* FIX 7: code blocks scroll */
+    .fixed-box,
+    .column {
+      background: #fff;
+    }
+
+    /* BROKEN ORIGINAL (for reference):
+       .wrapper{width:900px}  .column{width:100%;padding:1rem;border:2px solid}
+       img{width:1000px}  .fixed-box{height:90px}  — no overflow handling at all */
+  </style>
+</head>
+
+<body>
+  <div class="wrapper">
+    <h1>Overflow – Fixed</h1>
+
+    <div class="column">
+      <h2>Image</h2>
+      <img src="https://www.worldatlas.com/r/w1200-h630-c1200x630/upload/66/14/d8/kangchenjunga.jpg" alt="A very beatiful place i.e mountains">
+    </div>
+
+    <div class="column long-text">
+      <h2>Long unbroken text</h2>
+      <p>
+        https://www.example.com/this/is/a/very/long/url/that/would/normally/stretch/the/layout/sideways/forever/and/ever
+      </p>
+    </div>
+
+    <div class="column">
+      <h2>Wide table</h2>
+      <div class="table-scroll">
+        <table border="1" cellpadding="6" style="min-width:650px">
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>City</th>
+            <th>Course</th>
+            <th>Year</th>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>Amanpreet kaur</td>
+            <td>queenaman2321@gmail.com</td>
+            <td>Shahjahanpur</td>
+            <td>BCAI</td>
+            <td>2029</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="column">
+      <h2>Fixed-height box</h2>
+      <div class="fixed-box">On a hot summer day, a thirsty crow flew across the fields searching for water. After a long search, it found a pot with only a little water at the bottom. The crow tried to reach the water with its beak but failed. Thinking quickly, it picked up small pebbles and dropped them into the pot one by one. Slowly, the water level rose until the crow could finally drink and quench its thirst.
+Moral: Where there is a will, there is a way 
+.
+This story is short, easy to read, and teaches children the value of problem-solving, patience, and determination. It can be retold in just a few minutes, making it perfect for bedtime or classroom storytelling. Similar small stories, like "The Lion and the Mouse" or "The Greedy Dog," also convey important lessons about kindness, honesty, and avoiding greed 
+.
+For those interested in exploring more, collections of short moral stories provide a variety of tales that are both entertaining and educational, helping children develop values while enjoying storytelling./div>
+    </div>
+
+    <div class="column">
+      <h2>Code block</h2>
+      <pre>const message = "This line is intentionally very long so that it would overflow the container if not for overflow-x: auto";</pre>
+    </div>
+  </div>
+</body>
+
+</html>
